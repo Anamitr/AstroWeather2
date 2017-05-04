@@ -1,0 +1,103 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.socha.astroweather.MoonFragment"
+    android:background="@color/blue">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:text="Księżyc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:textColor="@android:color/white"
+                android:textSize="40dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/moonRiseTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="Wschód:"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/moonSetTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Zachód:"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/newMoonSetTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Najbliższy nów:"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/fullMoonSetAzimuthTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Pełnia:"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/moonPhaseRiseAzimuthTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Faza:"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/synodMoonSetAzimuthTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Dz. mies. syn.:"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
