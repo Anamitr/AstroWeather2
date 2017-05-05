@@ -19,10 +19,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 
 public class InfoFragment extends Fragment {
     public TextView timeTextView, longitudeTextView, latitudeTextView, refreshRateTextView;
+    private static Pattern pattern = Pattern.compile("\\s");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +40,9 @@ public class InfoFragment extends Fragment {
         longitudeTextView.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 try {
-                    MainActivity.longitude = Double.parseDouble(longitudeTextView.getText().toString());
+                    String text = longitudeTextView.getText().toString();
+                    if(pattern.matcher(text).find()) throw new NumberFormatException();
+                    MainActivity.longitude = Double.parseDouble(text);
                     MainActivity.updateInfo();
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Nieprawidłowa liczba!", Toast.LENGTH_SHORT).show();
@@ -54,9 +58,11 @@ public class InfoFragment extends Fragment {
         latitudeTextView.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 try {
+                    String text = latitudeTextView.getText().toString();
+                    if(pattern.matcher(text).find()) throw new NumberFormatException();
                     Double latitude = Double.parseDouble(latitudeTextView.getText().toString());
                     if(latitude > -90 && latitude < 90)
-                        MainActivity.latitude = Double.parseDouble(latitudeTextView.getText().toString());
+                        MainActivity.longitude = latitude;
                     else throw new NumberFormatException();
                     MainActivity.updateInfo();
                 } catch (NumberFormatException e) {
@@ -73,7 +79,9 @@ public class InfoFragment extends Fragment {
         refreshRateTextView.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 try {
-                    MainActivity.refreshRate = Double.parseDouble(refreshRateTextView.getText().toString());
+                    String text = refreshRateTextView.getText().toString();
+                    if(pattern.matcher(text).find()) throw new NumberFormatException();
+                    MainActivity.refreshRate = Double.parseDouble(text);
                     MainActivity.updateInfo();
                 } catch (NumberFormatException e) {
                     Toast.makeText(getActivity(), "Nieprawidłowa liczba!", Toast.LENGTH_SHORT).show();

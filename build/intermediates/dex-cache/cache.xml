@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\c222bb5b7b8994c549dc4a7f1873d1572eb128a9\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_51f84cf7fd03edb43da9eb7916e4786c7769408f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\8ec98e8c8fa18d91c50902b9dce54389880e77d7\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_9d24245e91ba33f5f540459188d599d7989fd65e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\3aed9a934201665bb06c736ad1666d8c53a4f476\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_4f5a503027c16af9e95d83cd165179fa97df9f29.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\student\Desktop\repo\AstroWeather\app\libs\astrocalculator.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="72ab0f44b65a7732286d24fd30e9392db95cc171">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\astrocalculator_eb9c593249bdcf9bd3d6740b97eb82115387a678.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\d4ad6f1fa6ebfa27dfe228efa6cede67fbc6ef38\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_f3baa3a2ad7300297cc1e58637714cdeb4a83ef8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\19d85f04a4c604b913cae8638f0381fcb7a4978b\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_7ccba04017924e69e00621d0046f0617db592db7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\84e8678adfeb416a1ad1232ed07edec440eaee4d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_3f4beb6d7f6491135e6725d8d503c1b97af603cc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\student\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\support-annotations-25.3.1_9a1d521e9de9e1e89704ecdd800592a63a0edf1f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\d0424d09714f34dfd20ad801dbec77147aa13c72\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_29e6b8cedbc37821988ee5d83ea7c657710451b1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\1a7191c050371066cb90270b6ae61a41cf156925\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_c7ee0796a4adf78405e17aca47af20f421d02db3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Android\.android\build-cache\49a4682a98aa3cad6e5bcc2dd0b68634c5d520ff\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\Users\student\Desktop\repo\AstroWeather\app\build\intermediates\pre-dexed\debug\classes_e5403c177ae2201790174ab4c36c51b4088f094a.jar" />
+    </item>
+
+</items>
