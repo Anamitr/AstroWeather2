@@ -9,14 +9,14 @@
  * survivingwithandroid@gmail.com
  *
  */
-package com.survivingwithandroid.weatherapp;
+package com.example.socha.astroweather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.survivingwithandroid.weatherapp.model.Location;
-import com.survivingwithandroid.weatherapp.model.Weather;
+import com.example.socha.astroweather.model.Location;
+import com.example.socha.astroweather.model.Weather;
 
 /*
  * Copyright (C) 2013 Surviving with Android (http://www.survivingwithandroid.com)

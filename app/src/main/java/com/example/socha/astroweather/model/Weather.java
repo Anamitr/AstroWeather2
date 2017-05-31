@@ -9,7 +9,7 @@
  * survivingwithandroid@gmail.com
  *
  */
-package com.survivingwithandroid.weatherapp.model;
+package com.example.socha.astroweather.model;
 
 /*
  * Copyright (C) 2013 Surviving with Android (http://www.survivingwithandroid.com)

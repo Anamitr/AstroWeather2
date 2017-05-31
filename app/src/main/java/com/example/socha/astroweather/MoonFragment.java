@@ -62,47 +62,4 @@ public class MoonFragment extends Fragment {
         this.moonPhaseRiseAzimuthTextView.setText(sunInfo.remove(0));
         this.synodMoonSetAzimuthTextView.setText(sunInfo.remove(0));
     }
-
-//    public void calculateMoonInfo() {
-//        AstroCalculator.Location loc = new AstroCalculator.Location(MainActivity.latitude, MainActivity.longitude);
-//        Calendar mCalendar = new GregorianCalendar();
-//        TimeZone mTimeZone = mCalendar.getTimeZone();
-//        AstroDateTime datetime = new AstroDateTime(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH) + 1,
-//                Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR), Calendar.getInstance().get(Calendar.MINUTE),
-//                Calendar.getInstance().get(Calendar.SECOND), getOffset(), mTimeZone.inDaylightTime(new Date()));
-//        AstroCalculator calc = new AstroCalculator(datetime, loc);
-//        AstroCalculator.MoonInfo moon = calc.getMoonInfo();
-//        try {
-//            this.moonRiseTextView.setText("Wschód: " + moon.getMoonrise().toString());
-//            this.moonSetTextView.setText("Zachód: " + moon.getMoonset().toString());
-//            this.newMoonSetTextView.setText("Najbliższy nów: " + moon.getNextNewMoon().toString());
-//            this.fullMoonSetAzimuthTextView.setText("Pełnia: " + moon.getNextFullMoon().toString());
-//            this.moonPhaseRiseAzimuthTextView.setText("Faza: " + moon.getIllumination() + "%");
-//
-//        } catch (NullPointerException esception) {
-//            Toast.makeText(getActivity(), "Błąd AstroCalculatora!", Toast.LENGTH_SHORT).show();
-//        }
-//        String temp = Integer.toString(datetime.getYear()) + "-" + Integer.toString(datetime.getMonth()) + "-" + Integer.toString(datetime.getDay());
-//        AstroDateTime now = moon.getNextNewMoon();
-//        String temp2 = Integer.toString(now.getYear()) + "-" + Integer.toString(now.getMonth()) + "-" + Integer.toString(now.getDay());
-//
-//        try {
-//            Date dlast = new SimpleDateFormat("yyyy-mm-dd").parse((temp));
-//            Date dnow = new SimpleDateFormat("yyyy-mm-dd").parse((temp2));
-//            long diff = Math.abs(dnow.getTime() - dlast.getTime());
-//            long diffDays = diff / (24 * 60 * 60 * 1000);
-//            this.synodMoonSetAzimuthTextView.setText("Dz. mies. syn.: " + Long.toString(diffDays));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public int getOffset(){
-//        TimeZone timezone = TimeZone.getDefault();
-//        int seconds = timezone.getOffset(Calendar.ZONE_OFFSET)/1000;
-//        double minutes = seconds/60;
-//        double hours = minutes/60;
-//        int finalHours = (int) hours;
-//        return finalHours;
-//    }
 }

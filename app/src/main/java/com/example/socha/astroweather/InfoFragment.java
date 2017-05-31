@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 
 public class InfoFragment extends Fragment {
-    public TextView timeTextView, longitudeTextView, latitudeTextView, refreshRateTextView;
+    public TextView timeTextView, longitudeTextView, latitudeTextView, refreshRateTextView, cityTextView;
     private static Pattern pattern = Pattern.compile("\\s");
 
     @Override
@@ -36,6 +36,9 @@ public class InfoFragment extends Fragment {
         longitudeTextView = (TextView)rootView.findViewById(R.id.longitudeTextView);
         latitudeTextView = (TextView)rootView.findViewById(R.id.latitudeTextView);
         refreshRateTextView = (TextView)rootView.findViewById(R.id.refreshRateTextView);
+        cityTextView = (TextView)rootView.findViewById(R.id.cityTextView);
+
+        MainActivity.location = cityTextView.getText().toString();
 
         longitudeTextView.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {

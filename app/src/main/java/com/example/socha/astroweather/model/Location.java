@@ -9,7 +9,7 @@
  * survivingwithandroid@gmail.com
  *
  */
-package com.survivingwithandroid.weatherapp.model;
+package com.example.socha.astroweather.model;
 
 import java.io.Serializable;
 /*

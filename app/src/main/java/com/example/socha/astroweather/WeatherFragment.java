@@ -1,109 +1,151 @@
 package com.example.socha.astroweather;
 
-import android.content.Context;
-import android.net.Uri;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.socha.astroweather.model.Location;
+import com.example.socha.astroweather.model.Weather;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.support.v4.app.Fragment;
 
-import com.example.android.animationsdemo.R;
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WeatherFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WeatherFragment#newInstance} factory method to
- * create an instance of this fragment.
+/*
+ * Copyright (C) 2013 Surviving with Android (http://www.survivingwithandroid.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 public class WeatherFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView cityText;
+    private TextView condDescr;
+    private TextView temp;
+    private TextView press;
+    private TextView windSpeed;
+    private TextView windDeg;
 
-    private OnFragmentInteractionListener mListener;
+    private TextView hum;
+    private ImageView imgView;
 
-    public WeatherFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WeatherFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WeatherFragment newInstance(String param1, String param2) {
-        WeatherFragment fragment = new WeatherFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.fragment_weather);
+//        String city = "London,UK";
+//
+//        cityText = (TextView) findViewById(R.id.cityText);
+//        condDescr = (TextView) findViewById(R.id.condDescr);
+//        temp = (TextView) findViewById(R.id.temp);
+//        hum = (TextView) findViewById(R.id.hum);
+//        press = (TextView) findViewById(R.id.press);
+//        windSpeed = (TextView) findViewById(R.id.windSpeed);
+//        windDeg = (TextView) findViewById(R.id.windDeg);
+//        imgView = (ImageView) findViewById(R.id.condIcon);
+//
+//        JSONWeatherTask task = new JSONWeatherTask();
+//        task.execute(new String[]{city});
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.fragment_weather, container, false);
+        String city = "Lodz";
+
+        cityText = (TextView)rootView.findViewById(R.id.cityText);
+        condDescr = (TextView)rootView.findViewById(R.id.condDescr);
+        temp = (TextView)rootView.findViewById(R.id.temp);
+        hum = (TextView)rootView.findViewById(R.id.hum);
+        press = (TextView)rootView.findViewById(R.id.press);
+        windSpeed = (TextView)rootView.findViewById(R.id.windSpeed);
+        windDeg = (TextView)rootView.findViewById(R.id.windDeg);
+        imgView = (ImageView)rootView.findViewById(R.id.condIcon);
+
+        JSONWeatherTask task = new JSONWeatherTask();
+        task.execute(new String[]{city});
+
+        return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+
+
+    private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
+
+        @Override
+        protected Weather doInBackground(String... params) {
+            Weather weather = new Weather();
+            Log.d("params: ",params[0]);
+            String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));
+
+            try {
+                weather = JSONWeatherParser.getWeather(data);
+
+                // Let's retrieve the icon
+                weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return weather;
+
         }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+
+        @Override
+        protected void onPostExecute(Weather weather) {
+            super.onPostExecute(weather);
+
+            if (weather.iconData != null && weather.iconData.length > 0) {
+                Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
+                imgView.setImageBitmap(img);
+            }
+
+            cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+            condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
+            temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + "�C");
+            hum.setText("" + weather.currentCondition.getHumidity() + "%");
+            press.setText("" + weather.currentCondition.getPressure() + " hPa");
+            windSpeed.setText("" + weather.wind.getSpeed() + " mps");
+            windDeg.setText("" + weather.wind.getDeg() + "�");
+
         }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

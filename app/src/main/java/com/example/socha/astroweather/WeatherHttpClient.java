@@ -9,7 +9,9 @@
  * survivingwithandroid@gmail.com
  *
  */
-package com.survivingwithandroid.weatherapp;
+package com.example.socha.astroweather;
+
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -36,6 +38,7 @@ public class WeatherHttpClient {
 
 	private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 	private static String IMG_URL = "http://openweathermap.org/img/w/";
+	private static String API_KEY = "&appid=99333b30a2a0be0e4d7c7ef358f2e3e1";
 
 	
 	public String getWeatherData(String location) {
@@ -43,11 +46,12 @@ public class WeatherHttpClient {
 		InputStream is = null;
 
 		try {
-			con = (HttpURLConnection) ( new URL(BASE_URL + location)).openConnection();
-			con.setRequestMethod("GET");
-			con.setDoInput(true);
-			con.setDoOutput(true);
-			con.connect();
+			con = (HttpURLConnection) ( new URL(BASE_URL + location + API_KEY)).openConnection();
+//			con.setRequestMethod("GET");
+//			con.setDoInput(true);
+//			con.setDoOutput(true);
+//			con.connect();
+			Log.d("con:",con.getInputStream().toString());
 			
 			// Let's read the response
 			StringBuffer buffer = new StringBuffer();
