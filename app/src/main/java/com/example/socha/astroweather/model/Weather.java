@@ -11,6 +11,8 @@
  */
 package com.example.socha.astroweather.model;
 
+import android.graphics.Bitmap;
+
 /*
  * Copyright (C) 2013 Surviving with Android (http://www.survivingwithandroid.com)
  *
@@ -37,6 +39,7 @@ public class Weather {
 	public Clouds clouds = new Clouds();
 	
 	public byte[] iconData;
+	public Bitmap iconBitmap;
 	
 	public  class CurrentCondition {
 		private int weatherId;

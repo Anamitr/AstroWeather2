@@ -9,7 +9,7 @@
  * survivingwithandroid@gmail.com
  *
  */
-package com.example.socha.astroweather;
+package com.example.socha.astroweather.GettingDataFromURL;
 
 import org.json.JSONArray;
 import org.json.JSONException;

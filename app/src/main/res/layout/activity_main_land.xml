@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:id="@+id/frags">
 
-    <fragment class="com.example.socha.astroweather.InfoFragment"
+    <fragment class="com.example.socha.astroweather.fragments.InfoFragment"
         android:id="@+id/info_fragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
-    <fragment class="com.example.socha.astroweather.SunFragment"
+    <fragment class="com.example.socha.astroweather.fragments.SunFragment"
         android:id="@+id/sun_fragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
-    <fragment class="com.example.socha.astroweather.MoonFragment"
+    <fragment class="com.example.socha.astroweather.fragments.MoonFragment"
         android:id="@+id/moon_fragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />

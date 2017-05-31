@@ -1,7 +1,5 @@
-package com.example.socha.astroweather;
+package com.example.socha.astroweather.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,19 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.astrocalculator.AstroCalculator;
-import com.astrocalculator.AstroDateTime;
+import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
+import com.example.socha.astroweather.astronomy.AstronomyCalculator;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 public class MoonFragment extends Fragment {
     private TextView moonRiseTextView, moonSetTextView, newMoonSetTextView, fullMoonSetAzimuthTextView, moonPhaseRiseAzimuthTextView, synodMoonSetAzimuthTextView;

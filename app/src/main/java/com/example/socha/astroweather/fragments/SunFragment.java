@@ -1,4 +1,4 @@
-package com.example.socha.astroweather;
+package com.example.socha.astroweather.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.socha.astroweather.MainActivity;
+import com.example.socha.astroweather.R;
+import com.example.socha.astroweather.astronomy.AstronomyCalculator;
 
 import java.util.ArrayList;
 

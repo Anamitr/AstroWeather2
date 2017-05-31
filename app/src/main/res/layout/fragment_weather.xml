@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.socha.astroweather.SunFragment"
+    tools:context="com.example.socha.astroweather.fragments.SunFragment"
     android:background="@color/blue">
 
 
@@ -13,19 +13,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/cityText"
                 style="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:textSize="40dp"/>
 
             <ImageView
                 android:id="@+id/condIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/cityText" />
 
@@ -35,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/condIcon"
                 android:layout_alignLeft="@id/condIcon"
+                android:textSize="40dp"
                 />
 
             <TextView
@@ -44,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_alignBaseline="@id/condDescr"
-                android:layout_toRightOf="@id/condDescr"/>
+                android:layout_toRightOf="@id/condDescr"
+                android:textSize="40dp"/>
 
             <TextView
                 android:id="@+id/pressLab"
@@ -52,8 +56,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/condDescr"
-                android:text="Pressure"
-                android:layout_marginTop="15dp" />
+                android:text="Ciśnienie"
+                android:layout_marginTop="15dp"
+                android:textSize="40dp"/>
 
             <TextView
                 android:id="@+id/press"
@@ -61,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/pressLab"
                 android:layout_toRightOf="@id/pressLab"
+                android:textSize="40dp"
                 />
 
             <TextView
@@ -69,7 +75,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/pressLab"
-                android:text="Humidity" />
+                android:text="Wilgotność"
+                android:textSize="40dp"/>
 
             <TextView
                 android:id="@+id/hum"
@@ -78,6 +85,7 @@
                 android:layout_alignBaseline="@id/humLab"
                 android:layout_toRightOf="@id/humLab"
                 android:layout_marginLeft="4dp"
+                android:textSize="40dp"
                 />
 
             <TextView
@@ -86,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/humLab"
-                android:text="Wind" />
+                android:text="Wiatr"
+                android:textSize="40dp"/>
 
             <TextView
                 android:id="@+id/windSpeed"
@@ -95,6 +104,7 @@
                 android:layout_alignBaseline="@id/windLab"
                 android:layout_toRightOf="@id/windLab"
                 android:layout_marginLeft="4dp"
+                android:textSize="40dp"
                 />
 
             <TextView
@@ -104,6 +114,7 @@
                 android:layout_alignBaseline="@id/windLab"
                 android:layout_toRightOf="@id/windSpeed"
                 android:layout_marginLeft="4dp"
+                android:textSize="40dp"
                 />
 
         </LinearLayout>

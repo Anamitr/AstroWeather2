@@ -10,18 +10,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.util.Date;
+import com.example.socha.astroweather.fragments.InfoFragment;
+import com.example.socha.astroweather.fragments.MoonFragment;
+import com.example.socha.astroweather.fragments.SunFragment;
+import com.example.socha.astroweather.fragments.WeatherFragment;
 
 public class MainActivity extends FragmentActivity {
 
     private static final int NUM_PAGES = 4;
 
     public static Double longitude = 0.0, latitude = 0.0, refreshRate = 1.0;
-    public static String location = "Lodz", locLongitude = "0", locLatitude = "0";
+    public static String city = "Lodz", locLongitude = "0", locLatitude = "0";
 
 
     public boolean isTablet;
@@ -86,9 +86,9 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) return infoFragment;
-            if (position == 1) return sunFragment;
-            if (position == 2) return moonFragment;
-            if (position == 3) return weatherFragment;
+            if (position == 1) return weatherFragment;
+            if (position == 2) return sunFragment;
+            if (position == 3) return moonFragment;
             //if (position == 3) return locationFragment;
             else return new InfoFragment();
         }

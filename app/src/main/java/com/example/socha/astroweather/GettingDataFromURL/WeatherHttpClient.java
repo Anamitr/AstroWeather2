@@ -9,12 +9,15 @@
  * survivingwithandroid@gmail.com
  *
  */
-package com.example.socha.astroweather;
+package com.example.socha.astroweather.GettingDataFromURL;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -39,6 +42,8 @@ public class WeatherHttpClient {
 	private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
 	private static String IMG_URL = "http://openweathermap.org/img/w/";
 	private static String API_KEY = "&appid=99333b30a2a0be0e4d7c7ef358f2e3e1";
+
+	Bitmap image;
 
 	
 	public String getWeatherData(String location) {
@@ -81,11 +86,13 @@ public class WeatherHttpClient {
 		HttpURLConnection con = null ;
 		InputStream is = null;
 		try {
-			con = (HttpURLConnection) ( new URL(IMG_URL + code)).openConnection();
-			con.setRequestMethod("GET");
-			con.setDoInput(true);
-			con.setDoOutput(true);
-			con.connect();
+			URL url = new URL(IMG_URL + code +".png");
+			Log.d("image url:", url.toString());
+			con = (HttpURLConnection) ( url.openConnection());
+//			con.setRequestMethod("GET");
+//			con.setDoInput(true);
+//			con.setDoOutput(true);
+//			con.connect();
 			
 			// Let's read the response
 			is = con.getInputStream();
@@ -107,5 +114,22 @@ public class WeatherHttpClient {
 		
 		return null;
 		
+	}
+
+	public Bitmap getBitmapFromURL(String src) {
+		try {
+			java.net.URL url = new java.net.URL(IMG_URL + src +".png");
+			Log.d("bitmap url:", url.toString());
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
+			connection.setDoInput(true);
+			connection.connect();
+			InputStream input = connection.getInputStream();
+			Bitmap myBitmap = BitmapFactory.decodeStream(input);
+			return myBitmap;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.example.socha.astroweather;
+package com.example.socha.astroweather.astronomy;
 
 import android.util.Log;
 import android.widget.Toast;

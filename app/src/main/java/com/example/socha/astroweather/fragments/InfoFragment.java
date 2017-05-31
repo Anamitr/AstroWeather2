@@ -1,7 +1,5 @@
-package com.example.socha.astroweather;
+package com.example.socha.astroweather.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -10,20 +8,21 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 
 public class InfoFragment extends Fragment {
     public TextView timeTextView, longitudeTextView, latitudeTextView, refreshRateTextView, cityTextView;
+    public Button btnUpdateWeather;
     private static Pattern pattern = Pattern.compile("\\s");
 
     @Override
@@ -37,8 +36,9 @@ public class InfoFragment extends Fragment {
         latitudeTextView = (TextView)rootView.findViewById(R.id.latitudeTextView);
         refreshRateTextView = (TextView)rootView.findViewById(R.id.refreshRateTextView);
         cityTextView = (TextView)rootView.findViewById(R.id.cityTextView);
+        btnUpdateWeather = (Button)rootView.findViewById(R.id.btnUpdateWeather);
 
-        MainActivity.location = cityTextView.getText().toString();
+        MainActivity.city = cityTextView.getText().toString();
 
         longitudeTextView.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -95,6 +95,15 @@ public class InfoFragment extends Fragment {
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+        btnUpdateWeather.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                MainActivity.city = cityTextView.getText().toString();
+                MainActivity.weatherFragment.updateWeather();
+            }
         });
 
         return rootView;
