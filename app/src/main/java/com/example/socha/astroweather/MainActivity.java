@@ -15,12 +15,18 @@ import android.util.Log;
 import com.example.socha.astroweather.fragments.InfoFragment;
 import com.example.socha.astroweather.fragments.MoonFragment;
 import com.example.socha.astroweather.fragments.SunFragment;
+import com.example.socha.astroweather.model.DayForecast;
 //import com.example.socha.astroweather.fragments.WeatherFragment;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
@@ -28,7 +34,7 @@ public class MainActivity extends FragmentActivity {
     private static final int NUM_PAGES = 4;
 
     public static Double longitude = 0.0, latitude = 0.0, refreshRate = 1.0;
-    public static String city = "Lodz", locLongitude = "0", locLatitude = "0";
+    public static String city, locLongitude = "0", locLatitude = "0";
 
 
     public boolean isTablet;
@@ -45,6 +51,12 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            city =  savedInstanceState.getString("city");
+            readFavCities();
+            //infoFragment.updateListView();
+            //dayForecast = (DayForecast) savedInstanceState.getSerializable("dayForecast");
+        }
 
         isTablet = isTablet();
         setContentView(R.layout.activity_main_slim);
@@ -118,6 +130,70 @@ public class MainActivity extends FragmentActivity {
         }
         //Log.d("cities length:", new Integer(cities.size()).toString());
         return cities;
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putString("city", city);
+        try {
+            FileOutputStream fOut = openFileOutput("favouriteCities.txt", MODE_WORLD_READABLE);
+            OutputStreamWriter osw = new OutputStreamWriter(fOut);
+
+            // Write the string to the file
+            Log.d("fav",favouriteCities.toString());
+            for(String string : favouriteCities) {
+                osw.write(string + " ");
+            }
+            osw.write("\n");
+            //osw.write("hello merlin");
+
+       /* ensure that everything is
+        * really written out and close */
+            osw.flush();
+            osw.close();
+        } catch (FileNotFoundException e) {
+            Log.d("FileNotFoundException","!!!");
+        }
+        catch (IOException e) {
+            Log.d("IOException","!!!");
+        }
+
+
+
+        //savedInstanceState.putSerializable("", );
+    }
+
+    public void readFavCities() {
+        try {
+            FileInputStream fIn = openFileInput("favouriteCities.txt");
+            InputStreamReader isr = new InputStreamReader(fIn);
+
+        /* Prepare a char-Array that will
+         * hold the chars we read back in. */
+            char[] inputBuffer = new char[9000];
+
+            // Fill the Buffer with data from the file
+            isr.read(inputBuffer);
+
+            // Transform the chars to a String
+            String readString = new String(inputBuffer);
+            readString = readString.substring(0,readString.indexOf("\n"));
+            favouriteCities = new ArrayList<String>(Arrays.asList(readString.split(" ")));
+            Log.d("readString", readString);
+            Log.d("favouriteCities", favouriteCities.toString());
+
+
+            // Check if we read back the same chars that we had written out
+            boolean isTheSame = "hello merlin".equals(readString);
+
+            Log.i("Merlin Reading stuff", "success = " + isTheSame);
+        } catch (FileNotFoundException e) {
+            Log.d("FileNotFoundException","!!!");
+        }
+        catch (IOException e) {
+            Log.d("IOException","!!!");
+        }
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

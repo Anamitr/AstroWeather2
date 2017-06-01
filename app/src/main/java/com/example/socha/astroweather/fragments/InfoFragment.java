@@ -115,12 +115,7 @@ public class InfoFragment extends Fragment {
 
                     if( !MainActivity.favouriteCities.contains(newCity)) {
                         MainActivity.favouriteCities.add(newCity);
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                                getActivity(),
-                                android.R.layout.simple_list_item_1,
-                                MainActivity.favouriteCities);
-
-                        citiesListView.setAdapter(arrayAdapter);
+                        updateListView();
                     }
 
                 }
@@ -132,6 +127,7 @@ public class InfoFragment extends Fragment {
             }
         });
 
+        updateListView();
         citiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -141,6 +137,14 @@ public class InfoFragment extends Fragment {
             }});
 
         return rootView;
+    }
+
+    public void updateListView() {
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                MainActivity.favouriteCities);
+        citiesListView.setAdapter(arrayAdapter);
     }
 
     @Override

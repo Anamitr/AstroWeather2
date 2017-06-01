@@ -123,7 +123,7 @@ public class ForecastActivity extends Fragment {
                 imgView.setImageBitmap(weather.iconBitmap);
             }
 
-            cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
+            if(weather.location != null && weather.location.getCity() != null && weather.location.getCountry() != null) cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
             temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)));
             condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
 
