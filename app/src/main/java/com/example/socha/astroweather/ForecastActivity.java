@@ -42,7 +42,7 @@ public class ForecastActivity extends FragmentActivity {
     private TextView hum;
     private ImageView imgView;
 
-    private static String forecastDaysNum = "3";
+    private static String forecastDaysNum = "5";
     private ViewPager pager;
 
     @Override
@@ -50,17 +50,17 @@ public class ForecastActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
         String city = "Warszawa";
-        String lang = "en";
+        String lang = "pl";
 
         cityText = (TextView) findViewById(R.id.cityText);
         temp = (TextView) findViewById(R.id.temp);
-        unitTemp = (TextView) findViewById(R.id.unittemp);
-        unitTemp.setText(" C");
+//        unitTemp = (TextView) findViewById(R.id.unittemp);
+//        unitTemp.setText(" C");
         condDescr = (TextView) findViewById(R.id.skydesc);
 
         pager = (ViewPager) findViewById(R.id.pager);
         imgView = (ImageView) findViewById(R.id.condIcon);
-		/*
+
 		condDescr = (TextView) findViewById(R.id.condDescr);
 
 		hum = (TextView) findViewById(R.id.hum);
@@ -68,7 +68,7 @@ public class ForecastActivity extends FragmentActivity {
 		windSpeed = (TextView) findViewById(R.id.windSpeed);
 		windDeg = (TextView) findViewById(R.id.windDeg);
 
-		*/
+
 
 
         JSONWeatherTask task = new JSONWeatherTask();
@@ -119,14 +119,14 @@ public class ForecastActivity extends FragmentActivity {
             cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
             temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)));
             condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
-			/*
 
-			temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)) + "�C");
+
+			temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)) + " C");
 			hum.setText("" + weather.currentCondition.getHumidity() + "%");
 			press.setText("" + weather.currentCondition.getPressure() + " hPa");
 			windSpeed.setText("" + weather.wind.getSpeed() + " mps");
 			windDeg.setText("" + weather.wind.getDeg() + "�");
-			*/
+
         }
     }
 
