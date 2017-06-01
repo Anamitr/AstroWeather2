@@ -11,6 +11,8 @@
  */
 package com.example.socha.astroweather.GettingDataFromURL;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,8 +114,9 @@ public class JSONWeatherParser {
 			JSONObject jTempObj = jDayForecast.getJSONObject("temp");
 
 			df.forecastTemp.day = (float) jTempObj.getDouble("day");
-			df.forecastTemp.min = (float) jTempObj.getDouble("min");
-			df.forecastTemp.max = (float) jTempObj.getDouble("max");
+			Log.d("json min", new Float((float) jTempObj.getDouble("min")).toString());
+			df.forecastTemp.min = (float) jTempObj.getDouble("min") - 275;
+			df.forecastTemp.max = (float) jTempObj.getDouble("max") - 275;
 			df.forecastTemp.night = (float) jTempObj.getDouble("night");
 			df.forecastTemp.eve = (float) jTempObj.getDouble("eve");
 			df.forecastTemp.morning = (float) jTempObj.getDouble("morn");
@@ -132,9 +135,6 @@ public class JSONWeatherParser {
 
 			forecast.addForecast(df);
 		}
-
-
-
 		return forecast;
 	}
 

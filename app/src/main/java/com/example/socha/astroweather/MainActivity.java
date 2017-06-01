@@ -10,11 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.example.socha.astroweather.fragments.InfoFragment;
 import com.example.socha.astroweather.fragments.MoonFragment;
 import com.example.socha.astroweather.fragments.SunFragment;
-import com.example.socha.astroweather.fragments.WeatherFragment;
+//import com.example.socha.astroweather.fragments.WeatherFragment;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
 
@@ -30,8 +36,9 @@ public class MainActivity extends FragmentActivity {
     public static SunFragment sunFragment = new SunFragment();
     public static MoonFragment moonFragment = new MoonFragment();
     public static InfoFragment infoFragment = new InfoFragment();
-    public static WeatherFragment weatherFragment = new WeatherFragment();
+    //public static WeatherFragment weatherFragment = new WeatherFragment();
     public static ForecastActivity forecastActivity = new ForecastActivity();
+    public static ArrayList<String> cities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,9 @@ public class MainActivity extends FragmentActivity {
         mPager.setAdapter(mPagerAdapter);
         mPager.setOffscreenPageLimit(10);
         mPagerAdapter.notifyDataSetChanged();
+
+        cities = getCitiesFromFile();
+        Log.d("cities length:", new Integer(cities.size()).toString());
     }
 
 
@@ -77,6 +87,35 @@ public class MainActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         mPagerAdapter.notifyDataSetChanged();
+    }
+
+    public ArrayList<String> getCitiesFromFile() {
+        Log.d("file loading start","");
+        ArrayList<String> cities = new ArrayList<String>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("cities.txt")));
+
+            // do reading, usually loop until end of file reading
+            String mLine;
+            while ((mLine = reader.readLine()) != null) {
+                //Log.d("city:", mLine);
+                cities.add(mLine);
+            }
+        } catch (IOException e) {
+            //log the exception
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    //log the exception
+                }
+            }
+        }
+        //Log.d("cities length:", new Integer(cities.size()).toString());
+        return cities;
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

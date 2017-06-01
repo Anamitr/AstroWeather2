@@ -34,6 +34,7 @@ import com.example.socha.astroweather.model.WeatherForecast;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 /**
  * @author Francesco
@@ -75,7 +76,9 @@ public class DailyForecastPageAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int num) {
 		DayForecast dayForecast = (DayForecast) forecast.getForecast(num);
 		DayForecastFragment f = new DayForecastFragment();
+		Log.d("adapter min temp:", new Float(dayForecast.forecastTemp.min).toString());
 		f.setForecast(dayForecast);
+		Log.d("adapter2 min temp:", new Float(f.dayForecast.forecastTemp.min).toString());
 		return f;
 	}
 

@@ -101,8 +101,16 @@ public class InfoFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                MainActivity.city = cityTextView.getText().toString();
-                MainActivity.weatherFragment.updateWeather();
+                if(MainActivity.cities.contains(cityTextView.getText().toString())) {
+                    MainActivity.city = cityTextView.getText().toString();
+                    MainActivity.forecastActivity.updateWeatherForecast();
+                    //MainActivity.weatherFragment.updateWeather();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Nie ma takiego miasta!",
+                            Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

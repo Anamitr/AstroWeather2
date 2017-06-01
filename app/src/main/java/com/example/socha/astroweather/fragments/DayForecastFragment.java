@@ -32,6 +32,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class DayForecastFragment extends Fragment {
 	
-	private DayForecast dayForecast;
+	public DayForecast dayForecast;
 	private ImageView iconWeather;
 	
 	public DayForecastFragment() {}
@@ -54,6 +55,7 @@ public class DayForecastFragment extends Fragment {
 	public void setForecast(DayForecast dayForecast) {
 		
 		this.dayForecast = dayForecast;
+		Log.d("setForecast min", new Float(dayForecast.forecastTemp.min).toString());
 		
 	}
 
@@ -67,8 +69,9 @@ public class DayForecastFragment extends Fragment {
 		
 		TextView tempView = (TextView) v.findViewById(R.id.tempForecast);
 		TextView descView = (TextView) v.findViewById(R.id.skydescForecast);
-		dayForecast.forecastTemp = new ForecastTemp();
-		tempView.setText( (int) (dayForecast.forecastTemp.min - 275.15) + "-" + (int) (dayForecast.forecastTemp.max - 275.15) );
+		//dayForecast.forecastTemp = new ForecastTemp();
+		Log.d("min temp:", new Float(dayForecast.forecastTemp.min).toString());
+		tempView.setText( (int) (dayForecast.forecastTemp.min) + "-" + (int) (dayForecast.forecastTemp.max) + " C" );
 		descView.setText(dayForecast.weather.currentCondition.getDescr());
 		iconWeather = (ImageView) v.findViewById(R.id.forCondIcon);
 		// Now we retrieve the weather icon

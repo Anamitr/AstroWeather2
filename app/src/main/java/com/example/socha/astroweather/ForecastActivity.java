@@ -5,6 +5,7 @@ import com.example.socha.astroweather.GettingDataFromURL.WeatherHttpClient;
 import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
 import com.example.socha.astroweather.adapter.DailyForecastPageAdapter;
+//import com.example.socha.astroweather.fragments.WeatherFragment;
 import com.example.socha.astroweather.model.Weather;
 import com.example.socha.astroweather.model.WeatherForecast;
 
@@ -50,8 +51,8 @@ public class ForecastActivity extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.activity_forecast, container, false);
-        String city = "Pabianice";
-        String lang = "pl";
+//        String city = "Warszawa";
+//        String lang = "pl";
 
         cityText = (TextView) rootView.findViewById(R.id.cityText);
         temp = (TextView) rootView.findViewById(R.id.temp);
@@ -72,13 +73,19 @@ public class ForecastActivity extends Fragment {
 
 
 
+        updateWeatherForecast();
+
+        return rootView;
+    }
+
+    public void updateWeatherForecast() {
+        String city = MainActivity.city;
+        String lang = "pl";
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city,lang});
 
         JSONForecastWeatherTask task1 = new JSONForecastWeatherTask();
         task1.execute(new String[]{city,lang, forecastDaysNum});
-
-        return rootView;
     }
 
 //    @Override
@@ -149,8 +156,8 @@ public class ForecastActivity extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            Log.d("jsontask", new Float(forecast.getForecast(0).forecastTemp.min).toString());
             return forecast;
-
         }
 
         @Override
