@@ -85,7 +85,7 @@ public class WeatherFragment extends Fragment {
         protected Weather doInBackground(String... params) {
             Weather weather = new Weather();
             Log.d("params: ",params[0]);
-            String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));
+            String data = ( (new WeatherHttpClient()).getWeatherData(params[0],params[1]));
 
             try {
                 weather = JSONWeatherParser.getWeather(data);

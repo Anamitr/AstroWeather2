@@ -47,12 +47,18 @@ public class WeatherHttpClient {
 	Bitmap image;
 
 	
-	public String getWeatherData(String location) {
+	public String getWeatherData(String location, String lang) {
 		HttpURLConnection con = null ;
 		InputStream is = null;
 
 		try {
-			con = (HttpURLConnection) ( new URL(BASE_URL + location + API_KEY)).openConnection();
+			String urlString = BASE_URL + location + API_KEY;
+
+			if (lang != null)
+				urlString = urlString + "&lang=" + lang;
+			URL url = new URL(urlString);
+
+			con = (HttpURLConnection) url.openConnection();
 //			con.setRequestMethod("GET");
 //			con.setDoInput(true);
 //			con.setDoOutput(true);

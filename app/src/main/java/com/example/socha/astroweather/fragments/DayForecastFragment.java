@@ -37,6 +37,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * @author Francesco
  *
@@ -83,7 +85,10 @@ public class DayForecastFragment extends Fragment {
 			try {
 
 				// Let's retrieve the icon
-				data = ( (new WeatherHttpClient()).getImage(params[0]));
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				Bitmap bmp = new WeatherHttpClient().getBitmapFromURL(params[0]);
+				bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+				data = stream.toByteArray();
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -91,9 +96,6 @@ public class DayForecastFragment extends Fragment {
 
 			return data;
 	}
-
-
-
 
 	@Override
 		protected void onPostExecute(byte[] data) {

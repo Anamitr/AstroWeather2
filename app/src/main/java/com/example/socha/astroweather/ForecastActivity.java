@@ -91,7 +91,7 @@ public class ForecastActivity extends FragmentActivity {
         @Override
         protected Weather doInBackground(String... params) {
             Weather weather = new Weather();
-            String data = ( (new WeatherHttpClient()).getWeatherData(params[0]));//, params[1]));
+            String data = ( (new WeatherHttpClient()).getWeatherData(params[0],params[1]));//, params[1]));
 
             try {
                 weather = JSONWeatherParser.getWeather(data);
