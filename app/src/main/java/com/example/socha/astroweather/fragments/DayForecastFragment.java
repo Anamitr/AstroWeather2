@@ -21,6 +21,7 @@ import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
 import com.example.socha.astroweather.adapter.DailyForecastPageAdapter;
 import com.example.socha.astroweather.model.DayForecast;
+import com.example.socha.astroweather.model.ForecastTemp;
 import com.example.socha.astroweather.model.Weather;
 import com.example.socha.astroweather.model.WeatherForecast;
 
@@ -59,10 +60,14 @@ public class DayForecastFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+        if (savedInstanceState != null){
+            dayForecast = (DayForecast) savedInstanceState.getSerializable("dayForecast");
+        }
 		View v = inflater.inflate(R.layout.dayforecast_fragment, container, false);
 		
 		TextView tempView = (TextView) v.findViewById(R.id.tempForecast);
 		TextView descView = (TextView) v.findViewById(R.id.skydescForecast);
+		dayForecast.forecastTemp = new ForecastTemp();
 		tempView.setText( (int) (dayForecast.forecastTemp.min - 275.15) + "-" + (int) (dayForecast.forecastTemp.max - 275.15) );
 		descView.setText(dayForecast.weather.currentCondition.getDescr());
 		iconWeather = (ImageView) v.findViewById(R.id.forCondIcon);
@@ -73,7 +78,11 @@ public class DayForecastFragment extends Fragment {
 		return v;
 	}
 
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
 
+		savedInstanceState.putSerializable("dayForecast", dayForecast);
+	}
 
 	private class JSONIconWeatherTask extends AsyncTask<String, Void, byte[]> {
 

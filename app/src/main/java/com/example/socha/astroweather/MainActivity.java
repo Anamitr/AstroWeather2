@@ -90,7 +90,6 @@ public class MainActivity extends FragmentActivity {
             if (position == 1) return forecastActivity;
             if (position == 2) return sunFragment;
             if (position == 3) return moonFragment;
-            //if (position == 3) return locationFragment;
             else return new InfoFragment();
         }
 
