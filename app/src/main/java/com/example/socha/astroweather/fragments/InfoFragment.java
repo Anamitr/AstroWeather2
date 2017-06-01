@@ -8,7 +8,9 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,13 +18,16 @@ import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.regex.Pattern;
 
 
 public class InfoFragment extends Fragment {
     public TextView timeTextView, longitudeTextView, latitudeTextView, refreshRateTextView, cityTextView;
     public Button btnUpdateWeather;
+    public ListView citiesListView;
     private static Pattern pattern = Pattern.compile("\\s");
 
     @Override
@@ -37,6 +42,7 @@ public class InfoFragment extends Fragment {
         refreshRateTextView = (TextView)rootView.findViewById(R.id.refreshRateTextView);
         cityTextView = (TextView)rootView.findViewById(R.id.cityTextView);
         btnUpdateWeather = (Button)rootView.findViewById(R.id.btnUpdateWeather);
+        citiesListView = (ListView)rootView.findViewById(R.id.citiesListView);
 
         MainActivity.city = cityTextView.getText().toString();
 
@@ -104,7 +110,14 @@ public class InfoFragment extends Fragment {
                 if(MainActivity.cities.contains(cityTextView.getText().toString())) {
                     MainActivity.city = cityTextView.getText().toString();
                     MainActivity.forecastActivity.updateWeatherForecast();
-                    //MainActivity.weatherFragment.updateWeather();
+
+                    MainActivity.favouriteCities.add(cityTextView.getText().toString());
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                            getActivity(),
+                            android.R.layout.simple_list_item_1,
+                            MainActivity.favouriteCities);
+
+                    citiesListView.setAdapter(arrayAdapter);
                 }
                 else {
                     Toast.makeText(getActivity(), "Nie ma takiego miasta!",

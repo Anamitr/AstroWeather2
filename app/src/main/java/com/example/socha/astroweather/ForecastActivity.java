@@ -70,9 +70,6 @@ public class ForecastActivity extends Fragment {
 		windSpeed = (TextView) rootView.findViewById(R.id.windSpeed);
 		windDeg = (TextView) rootView.findViewById(R.id.windDeg);
 
-
-
-
         updateWeatherForecast();
 
         return rootView;

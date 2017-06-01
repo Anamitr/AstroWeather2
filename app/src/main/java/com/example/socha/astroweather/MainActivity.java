@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity {
 
@@ -39,6 +40,7 @@ public class MainActivity extends FragmentActivity {
     //public static WeatherFragment weatherFragment = new WeatherFragment();
     public static ForecastActivity forecastActivity = new ForecastActivity();
     public static ArrayList<String> cities;
+    public static List<String> favouriteCities = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
