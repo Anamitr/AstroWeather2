@@ -4,21 +4,20 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical"
-
+    android:layout_centerHorizontal="true"
      >
      
         <!--  Image weather condition -->
     <ImageView android:id="@+id/forCondIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-                />
-    
+        android:layout_centerHorizontal="true" />
      <TextView
         android:id="@+id/skydescForecast"
         style="?android:attr/textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+         android:textColor="@android:color/white"
         android:layout_below="@id/forCondIcon" >
     </TextView>
 
@@ -30,8 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/skydescForecast"
         android:layout_centerHorizontal="true" 
->
-    </TextView>
+        android:textColor="@android:color/white"/>
 
    
 

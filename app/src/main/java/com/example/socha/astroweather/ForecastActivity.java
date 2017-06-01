@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ForecastActivity extends FragmentActivity {
+public class ForecastActivity extends Fragment {
 
     private TextView cityText;
     private TextView condDescr;
@@ -46,27 +46,28 @@ public class ForecastActivity extends FragmentActivity {
     private ViewPager pager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forecast);
-        String city = "Warszawa";
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.activity_forecast, container, false);
+        String city = "Pabianice";
         String lang = "pl";
 
-        cityText = (TextView) findViewById(R.id.cityText);
-        temp = (TextView) findViewById(R.id.temp);
+        cityText = (TextView) rootView.findViewById(R.id.cityText);
+        temp = (TextView) rootView.findViewById(R.id.temp);
 //        unitTemp = (TextView) findViewById(R.id.unittemp);
 //        unitTemp.setText(" C");
-        condDescr = (TextView) findViewById(R.id.skydesc);
+        condDescr = (TextView) rootView.findViewById(R.id.skydesc);
 
-        pager = (ViewPager) findViewById(R.id.pager);
-        imgView = (ImageView) findViewById(R.id.condIcon);
+        pager = (ViewPager) rootView.findViewById(R.id.forecastPager);
+        imgView = (ImageView) rootView.findViewById(R.id.condIcon);
 
-		condDescr = (TextView) findViewById(R.id.condDescr);
+		condDescr = (TextView) rootView.findViewById(R.id.condDescr);
 
-		hum = (TextView) findViewById(R.id.hum);
-		press = (TextView) findViewById(R.id.press);
-		windSpeed = (TextView) findViewById(R.id.windSpeed);
-		windDeg = (TextView) findViewById(R.id.windDeg);
+		hum = (TextView) rootView.findViewById(R.id.hum);
+		press = (TextView) rootView.findViewById(R.id.press);
+		windSpeed = (TextView) rootView.findViewById(R.id.windSpeed);
+		windDeg = (TextView) rootView.findViewById(R.id.windDeg);
 
 
 
@@ -76,6 +77,8 @@ public class ForecastActivity extends FragmentActivity {
 
         JSONForecastWeatherTask task1 = new JSONForecastWeatherTask();
         task1.execute(new String[]{city,lang, forecastDaysNum});
+
+        return rootView;
     }
 
 //    @Override
@@ -125,7 +128,7 @@ public class ForecastActivity extends FragmentActivity {
 			hum.setText("" + weather.currentCondition.getHumidity() + "%");
 			press.setText("" + weather.currentCondition.getPressure() + " hPa");
 			windSpeed.setText("" + weather.wind.getSpeed() + " mps");
-			windDeg.setText("" + weather.wind.getDeg() + "�");
+			windDeg.setText("" + weather.wind.getDeg() + " stopni");
 
         }
     }
@@ -154,7 +157,7 @@ public class ForecastActivity extends FragmentActivity {
         protected void onPostExecute(WeatherForecast forecastWeather) {
             super.onPostExecute(forecastWeather);
 
-            DailyForecastPageAdapter adapter = new DailyForecastPageAdapter(Integer.parseInt(forecastDaysNum), getSupportFragmentManager(), forecastWeather);
+            DailyForecastPageAdapter adapter = new DailyForecastPageAdapter(Integer.parseInt(forecastDaysNum), getFragmentManager(), forecastWeather);
 
             pager.setAdapter(adapter);
         }

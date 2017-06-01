@@ -31,6 +31,7 @@ public class MainActivity extends FragmentActivity {
     public static MoonFragment moonFragment = new MoonFragment();
     public static InfoFragment infoFragment = new InfoFragment();
     public static WeatherFragment weatherFragment = new WeatherFragment();
+    public static ForecastActivity forecastActivity = new ForecastActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) return infoFragment;
-            if (position == 1) return weatherFragment;
+            if (position == 1) return forecastActivity;
             if (position == 2) return sunFragment;
             if (position == 3) return moonFragment;
             //if (position == 3) return locationFragment;
