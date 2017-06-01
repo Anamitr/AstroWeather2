@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -107,17 +108,21 @@ public class InfoFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                if(MainActivity.cities.contains(cityTextView.getText().toString())) {
-                    MainActivity.city = cityTextView.getText().toString();
+                String newCity = cityTextView.getText().toString();
+                if(MainActivity.cities.contains(newCity)) {
+                    MainActivity.city = newCity;
                     MainActivity.forecastActivity.updateWeatherForecast();
 
-                    MainActivity.favouriteCities.add(cityTextView.getText().toString());
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                            getActivity(),
-                            android.R.layout.simple_list_item_1,
-                            MainActivity.favouriteCities);
+                    if( !MainActivity.favouriteCities.contains(newCity)) {
+                        MainActivity.favouriteCities.add(newCity);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                                getActivity(),
+                                android.R.layout.simple_list_item_1,
+                                MainActivity.favouriteCities);
 
-                    citiesListView.setAdapter(arrayAdapter);
+                        citiesListView.setAdapter(arrayAdapter);
+                    }
+
                 }
                 else {
                     Toast.makeText(getActivity(), "Nie ma takiego miasta!",
@@ -126,6 +131,14 @@ public class InfoFragment extends Fragment {
 
             }
         });
+
+        citiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String selectedFromList = (String) (citiesListView.getItemAtPosition(position));
+                MainActivity.city = selectedFromList;
+                MainActivity.forecastActivity.updateWeatherForecast();
+            }});
 
         return rootView;
     }

@@ -127,7 +127,6 @@ public class ForecastActivity extends Fragment {
             temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)));
             condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
 
-
 			temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)) + " C");
 			hum.setText("" + weather.currentCondition.getHumidity() + "%");
 			press.setText("" + weather.currentCondition.getPressure() + " hPa");
