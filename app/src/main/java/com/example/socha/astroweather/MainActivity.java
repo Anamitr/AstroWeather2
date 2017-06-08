@@ -11,11 +11,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
+import com.example.socha.astroweather.fragments.ForecastFragment;
 import com.example.socha.astroweather.fragments.InfoFragment;
 import com.example.socha.astroweather.fragments.MoonFragment;
 import com.example.socha.astroweather.fragments.SunFragment;
-import com.example.socha.astroweather.model.DayForecast;
 //import com.example.socha.astroweather.fragments.WeatherFragment;
 
 import java.io.BufferedReader;
@@ -38,13 +40,13 @@ public class MainActivity extends FragmentActivity {
 
 
     public boolean isTablet;
-    private ViewPager mPager;
-    private PagerAdapter mPagerAdapter;
+    public static ViewPager mPager;
+    public static ScreenSlidePagerAdapter mPagerAdapter;
     public static SunFragment sunFragment = new SunFragment();
     public static MoonFragment moonFragment = new MoonFragment();
     public static InfoFragment infoFragment = new InfoFragment();
     //public static WeatherFragment weatherFragment = new WeatherFragment();
-    public static ForecastActivity forecastActivity = new ForecastActivity();
+    public static ForecastFragment forecastFragment = new ForecastFragment();
     public static ArrayList<String> cities;
     public static List<String> favouriteCities = new ArrayList<String>();
 
@@ -54,8 +56,6 @@ public class MainActivity extends FragmentActivity {
         if (savedInstanceState != null){
             city =  savedInstanceState.getString("city");
             readFavCities();
-            //infoFragment.updateListView();
-            //dayForecast = (DayForecast) savedInstanceState.getSerializable("dayForecast");
         }
 
         isTablet = isTablet();
@@ -146,7 +146,6 @@ public class MainActivity extends FragmentActivity {
                 osw.write(string + " ");
             }
             osw.write("\n");
-            //osw.write("hello merlin");
 
        /* ensure that everything is
         * really written out and close */
@@ -158,9 +157,6 @@ public class MainActivity extends FragmentActivity {
         catch (IOException e) {
             Log.d("IOException","!!!");
         }
-
-
-
         //savedInstanceState.putSerializable("", );
     }
 
@@ -196,7 +192,20 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    @Override
+    public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config);
+        Toast.makeText(this, "Orientation changed!",
+                Toast.LENGTH_LONG).show();
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setOffscreenPageLimit(10);
+        mPagerAdapter.notifyDataSetChanged();
+    }
+
+    public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -204,7 +213,7 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) return infoFragment;
-            if (position == 1) return forecastActivity;
+            if (position == 1) return forecastFragment;
             if (position == 2) return sunFragment;
             if (position == 3) return moonFragment;
             else return new InfoFragment();

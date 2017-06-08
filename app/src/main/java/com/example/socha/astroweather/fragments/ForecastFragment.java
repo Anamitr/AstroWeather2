@@ -1,4 +1,4 @@
-package com.example.socha.astroweather;
+package com.example.socha.astroweather.fragments;
 
 import com.example.socha.astroweather.GettingDataFromURL.JSONWeatherParser;
 import com.example.socha.astroweather.GettingDataFromURL.WeatherHttpClient;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ForecastActivity extends Fragment {
+public class ForecastFragment extends Fragment {
 
     private TextView cityText;
     private TextView condDescr;
@@ -43,12 +43,13 @@ public class ForecastActivity extends Fragment {
     private TextView hum;
     private ImageView imgView;
 
-    private static String forecastDaysNum = "5";
+    private static final String forecastDaysNum = "5";
     private ViewPager pager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.activity_forecast, container, false);
 //        String city = "Warszawa";
@@ -78,6 +79,9 @@ public class ForecastActivity extends Fragment {
     public void updateWeatherForecast() {
         String city = MainActivity.city;
         String lang = "pl";
+
+        cityText.setText(city);
+
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city,lang});
 
@@ -85,18 +89,16 @@ public class ForecastActivity extends Fragment {
         task1.execute(new String[]{city,lang, forecastDaysNum});
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
 
         @Override
         protected Weather doInBackground(String... params) {
+            Log.d("JSONWeatherTask","");
+
             Weather weather = new Weather();
             String data = ( (new WeatherHttpClient()).getWeatherData(params[0],params[1]));//, params[1]));
 
@@ -140,7 +142,7 @@ public class ForecastActivity extends Fragment {
 
         @Override
         protected WeatherForecast doInBackground(String... params) {
-
+            Log.d("JSONForecastWeatherTask","");
             String data = ( (new WeatherHttpClient()).getForecastWeatherData(params[0], params[1], params[2]));
             WeatherForecast forecast = new WeatherForecast();
             try {
@@ -159,12 +161,9 @@ public class ForecastActivity extends Fragment {
         @Override
         protected void onPostExecute(WeatherForecast forecastWeather) {
             super.onPostExecute(forecastWeather);
-
             DailyForecastPageAdapter adapter = new DailyForecastPageAdapter(Integer.parseInt(forecastDaysNum), getFragmentManager(), forecastWeather);
-
             pager.setAdapter(adapter);
         }
 
     }
-
 }

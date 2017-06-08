@@ -131,7 +131,7 @@
                     android:textColor="@android:color/white"/>
 
                 <EditText
-                    android:text="Warszawa"
+                    android:text="Murmansk"
                     android:id="@+id/cityTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -155,7 +155,8 @@
                     android:id="@+id/btnUpdateWeather"
                     android:text="Zaktualizuj pogodę"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    />
             </LinearLayout>
 
             <LinearLayout

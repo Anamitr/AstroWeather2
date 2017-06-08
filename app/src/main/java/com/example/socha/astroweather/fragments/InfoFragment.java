@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,7 @@ import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -34,6 +33,7 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_info, container, false);
 
@@ -104,26 +104,26 @@ public class InfoFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
+        Log.d("Info onCreateView","Ustawiamy btn listenera");
         btnUpdateWeather.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 String newCity = cityTextView.getText().toString();
                 if(MainActivity.cities.contains(newCity)) {
                     MainActivity.city = newCity;
-                    MainActivity.forecastActivity.updateWeatherForecast();
+
+
+                    MainActivity.forecastFragment.updateWeatherForecast();
 
                     if( !MainActivity.favouriteCities.contains(newCity)) {
                         MainActivity.favouriteCities.add(newCity);
                         updateListView();
                     }
-
                 }
                 else {
                     Toast.makeText(getActivity(), "Nie ma takiego miasta!",
                             Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
@@ -133,7 +133,7 @@ public class InfoFragment extends Fragment {
                                     int position, long id) {
                 String selectedFromList = (String) (citiesListView.getItemAtPosition(position));
                 MainActivity.city = selectedFromList;
-                MainActivity.forecastActivity.updateWeatherForecast();
+                MainActivity.forecastFragment.updateWeatherForecast();
             }});
 
         return rootView;
@@ -165,6 +165,10 @@ public class InfoFragment extends Fragment {
             }
         };
         handler.postDelayed(updateTask, 1000);
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     public void updateTextViews() {

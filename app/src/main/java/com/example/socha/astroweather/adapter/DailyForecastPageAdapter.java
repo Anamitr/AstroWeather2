@@ -34,13 +34,14 @@ import com.example.socha.astroweather.model.WeatherForecast;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 /**
  * @author Francesco
  *
  */
-public class DailyForecastPageAdapter extends FragmentPagerAdapter {
+public class DailyForecastPageAdapter extends FragmentStatePagerAdapter {
 
 	private int numDays;
 	private FragmentManager fm;
@@ -66,11 +67,7 @@ public class DailyForecastPageAdapter extends FragmentPagerAdapter {
 		gc.add(GregorianCalendar.DAY_OF_MONTH, position);
 		
 		return sdf.format(gc.getTime());
-		
-		
 	}
-
-
 
 	@Override
 	public Fragment getItem(int num) {
