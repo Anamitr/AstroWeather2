@@ -62,9 +62,9 @@ public class DayForecastFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-        if (savedInstanceState != null){
-            dayForecast = (DayForecast) savedInstanceState.getSerializable("dayForecast");
-        }
+//        if (savedInstanceState != null){
+//            dayForecast = (DayForecast) savedInstanceState.getSerializable("dayForecast");
+//        }
 		View v = inflater.inflate(R.layout.dayforecast_fragment, container, false);
 		
 		TextView tempView = (TextView) v.findViewById(R.id.tempForecast);
@@ -84,7 +84,7 @@ public class DayForecastFragment extends Fragment {
 	public void onSaveInstanceState(Bundle savedInstanceState) {
 		super.onSaveInstanceState(savedInstanceState);
 
-		savedInstanceState.putSerializable("dayForecast", dayForecast);
+		//savedInstanceState.putSerializable("dayForecast", dayForecast);
 	}
 
 	private class JSONIconWeatherTask extends AsyncTask<String, Void, byte[]> {
