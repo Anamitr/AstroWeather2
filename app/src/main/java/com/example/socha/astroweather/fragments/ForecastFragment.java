@@ -9,6 +9,9 @@ import com.example.socha.astroweather.adapter.DailyForecastPageAdapter;
 import com.example.socha.astroweather.model.Weather;
 import com.example.socha.astroweather.model.WeatherForecast;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -19,8 +22,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import org.json.JSONException;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class ForecastFragment extends Fragment {
 
@@ -77,8 +87,8 @@ public class ForecastFragment extends Fragment {
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city,lang});
 
-        JSONForecastWeatherTask task1 = new JSONForecastWeatherTask();
-        task1.execute(new String[]{city,lang, forecastDaysNum});
+//        JSONForecastWeatherTask task1 = new JSONForecastWeatherTask();
+//        task1.execute(new String[]{city,lang, forecastDaysNum});
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -92,21 +102,25 @@ public class ForecastFragment extends Fragment {
             Log.d("JSONWeatherTask","");
 
             Weather weather = new Weather();
-            String data = ( (new WeatherHttpClient()).getWeatherData(params[0],params[1]));//, params[1]));
 
-            try {
-                weather = JSONWeatherParser.getWeather(data);
-                System.out.println("Weather ["+weather+"]");
-                // Let's retrieve the icon
-                weather.iconBitmap = ( (new WeatherHttpClient()).getBitmapFromURL(weather.currentCondition.getIcon()));
+            if(((MainActivity) getActivity()).isOnline()) {
+                try {
+                    String data = ( (new WeatherHttpClient()).getWeatherData(params[0],params[1]));//, params[1]));
+                    weather = JSONWeatherParser.getWeather(data);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    System.out.println("Weather ["+weather+"]");
+                    // Let's retrieve the icon
+                    weather.iconBitmap = ( (new WeatherHttpClient()).getBitmapFromURL(weather.currentCondition.getIcon()));
+                    saveWeatherToFile(weather);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.d("Disconnected","Reading from file");
+                weather = loadWeatherFromFile(params[0]);
             }
             return weather;
-
         }
-
 
         @Override
         protected void onPostExecute(Weather weather) {
@@ -136,18 +150,21 @@ public class ForecastFragment extends Fragment {
         protected WeatherForecast doInBackground(String... params) {
             Log.d("JSONForecastWeatherTask","");
             String data = ( (new WeatherHttpClient()).getForecastWeatherData(params[0], params[1], params[2]));
-            WeatherForecast forecast = new WeatherForecast();
+            WeatherForecast weatherForecast = new WeatherForecast();
             try {
-                forecast = JSONWeatherParser.getForecastWeather(data);
-                System.out.println("Weather ["+forecast+"]");
+                weatherForecast = JSONWeatherParser.getForecastWeather(data);
+                saveWeatherForecastToFile(weatherForecast,params[0]);
+                weatherForecast = null;
+                weatherForecast = loadWeatherForecastFromFile(params[0]);
+                System.out.println("Weather ["+weatherForecast+"]");
                 // Let's retrieve the icon
                 //weather.iconData = ( (new WeatherHttpClient()).getImage(weather.currentCondition.getIcon()));
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Log.d("jsontask", new Float(forecast.getForecast(0).forecastTemp.min).toString());
-            return forecast;
+            Log.d("jsontask", new Float(weatherForecast.getForecast(0).forecastTemp.min).toString());
+            return weatherForecast;
         }
 
         @Override
@@ -156,6 +173,77 @@ public class ForecastFragment extends Fragment {
             DailyForecastPageAdapter adapter = new DailyForecastPageAdapter(Integer.parseInt(forecastDaysNum), getFragmentManager(), forecastWeather);
             pager.setAdapter(adapter);
         }
+    }
 
+    public void saveWeatherToFile(Weather weather) {
+        String fileName = "weather" + weather.location.getCity();
+        Log.d("Saving weather to file", fileName);
+        try {
+            FileOutputStream fos = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(weather);
+            os.close();
+            fos.close();
+            fos = new FileOutputStream("bitmapWeather" + weather.location.getCity());
+            weather.iconBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+            Log.d("IOException saving", fileName);
+        }
+    }
+
+    public Weather loadWeatherFromFile(String fileName) {
+        fileName = "weather" + fileName;
+        try {
+            FileInputStream fis = getContext().openFileInput(fileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            Weather weather = (Weather) is.readObject();
+            is.close();
+            fis.close();
+            weather.iconBitmap = BitmapFactory.decodeFile("bitmapWeather"+fileName);
+            return weather;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("IOException loading", fileName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Log.d("ClassNotFoundException", fileName);
+        }
+        return null;
+    }
+
+    public void saveWeatherForecastToFile(WeatherForecast weatherForecast, String fileName) {
+        fileName = "weatherForecast" + fileName;
+        Log.d("Saving weather to file", fileName);
+        try {
+            FileOutputStream fos = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(weatherForecast);
+            os.close();
+            fos.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+            Log.d("IOException saving", fileName);
+        }
+    }
+
+    public WeatherForecast loadWeatherForecastFromFile(String fileName) {
+        fileName = "weatherForecast" + fileName;
+        try {
+            FileInputStream fis = getContext().openFileInput(fileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            WeatherForecast weatherForecast = (WeatherForecast) is.readObject();
+            is.close();
+            fis.close();
+            return weatherForecast;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("IOException loading", fileName);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Log.d("ClassNotFoundException", fileName);
+        }
+        return null;
     }
 }

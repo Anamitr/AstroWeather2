@@ -1,7 +1,10 @@
 package com.example.socha.astroweather;
 
 
+import android.content.Context;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentActivity;
@@ -38,7 +41,6 @@ public class MainActivity extends FragmentActivity {
 
     public static Double longitude = 0.0, latitude = 0.0, refreshRate = 1.0;
     public static String city = "Pabianice";
-
 
     public boolean isTablet;
     public static ViewPager mPager;
@@ -79,6 +81,11 @@ public class MainActivity extends FragmentActivity {
 
         cities = getCitiesFromFile();
         Log.d("cities length:", new Integer(cities.size()).toString());
+
+        if(isOnline()) {
+            Toast.makeText(this, "is online!", Toast.LENGTH_LONG).show();
+        } else Toast.makeText(this, "is not omline!", Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -201,11 +208,17 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     @Override
     public void onConfigurationChanged(Configuration config) {
         super.onConfigurationChanged(config);
-        Toast.makeText(this, "Orientation changed!",
-                Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Orientation changed!", Toast.LENGTH_LONG).show();
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);

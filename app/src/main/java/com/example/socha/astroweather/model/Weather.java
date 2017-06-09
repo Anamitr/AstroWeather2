@@ -13,6 +13,8 @@ package com.example.socha.astroweather.model;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /*
  * Copyright (C) 2013 Surviving with Android (http://www.survivingwithandroid.com)
  *
@@ -28,7 +30,7 @@ import android.graphics.Bitmap;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class Weather {
+public class Weather implements Serializable{
 	
 	public Location location;
 	public CurrentCondition currentCondition = new CurrentCondition();
@@ -39,9 +41,9 @@ public class Weather {
 	public Clouds clouds = new Clouds();
 	
 	public byte[] iconData;
-	public Bitmap iconBitmap;
+	public transient Bitmap iconBitmap;
 	
-	public  class CurrentCondition {
+	public  class CurrentCondition implements Serializable {
 		private int weatherId;
 		private String condition;
 		private String descr;
@@ -87,11 +89,9 @@ public class Weather {
 		public void setHumidity(float humidity) {
 			this.humidity = humidity;
 		}
-		
-		
 	}
 	
-	public  class Temperature {
+	public  class Temperature implements Serializable {
 		private float temp;
 		private float minTemp;
 		private float maxTemp;
@@ -117,7 +117,7 @@ public class Weather {
 		
 	}
 	
-	public  class Wind {
+	public  class Wind implements Serializable {
 		private float speed;
 		private float deg;
 		public float getSpeed() {
@@ -136,7 +136,7 @@ public class Weather {
 		
 	}
 	
-	public  class Rain {
+	public  class Rain implements Serializable {
 		private String time;
 		private float ammount;
 		public String getTime() {
@@ -156,7 +156,7 @@ public class Weather {
 		
 	}
 
-	public  class Snow {
+	public  class Snow implements Serializable {
 		private String time;
 		private float ammount;
 		
@@ -176,18 +176,14 @@ public class Weather {
 		
 	}
 	
-	public  class Clouds {
+	public  class Clouds implements Serializable {
 		private int perc;
-
 		public int getPerc() {
 			return perc;
 		}
-
 		public void setPerc(int perc) {
 			this.perc = perc;
 		}
-		
-		
 	}
 
 }

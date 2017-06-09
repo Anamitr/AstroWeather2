@@ -1,10 +1,12 @@
 package com.example.socha.astroweather.model;
 
+import java.io.Serializable;
+
 /**
  * Created by socha on 01.06.2017.
  */
 
-public class ForecastTemp {
+public class ForecastTemp implements Serializable {
     public float day;
     public float min;
     public float max;

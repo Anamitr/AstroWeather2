@@ -16,6 +16,7 @@
 
 package com.example.socha.astroweather.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
  * @author Francesco
  *
  */
-public class WeatherForecast {
+public class WeatherForecast implements Serializable {
 
 	private List<DayForecast> daysForecast = new ArrayList<DayForecast>();
 	
