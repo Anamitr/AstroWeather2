@@ -94,17 +94,20 @@ public class DayForecastFragment extends Fragment {
 
 			byte[] data = null;
 
-			try {
+			if(((MainActivity) getActivity()).isOnline()) {
+				try {
 
-				// Let's retrieve the icon
-				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				Bitmap bmp = new WeatherHttpClient().getBitmapFromURL(params[0]);
-				bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-				data = stream.toByteArray();
+					// Let's retrieve the icon
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					Bitmap bmp = new WeatherHttpClient().getBitmapFromURL(params[0]);
+					bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+					data = stream.toByteArray();
 
-			} catch (Exception e) {
-				e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
+
 
 			return data;
 	}

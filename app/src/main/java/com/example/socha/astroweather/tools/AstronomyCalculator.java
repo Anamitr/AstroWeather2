@@ -1,7 +1,6 @@
-package com.example.socha.astroweather.astronomy;
+package com.example.socha.astroweather.tools;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
@@ -13,8 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by socha on 04.05.2017.

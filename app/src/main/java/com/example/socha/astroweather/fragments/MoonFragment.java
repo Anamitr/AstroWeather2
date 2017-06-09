@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
-import com.example.socha.astroweather.astronomy.AstronomyCalculator;
+import com.example.socha.astroweather.tools.AstronomyCalculator;
 
 import java.util.ArrayList;
 
