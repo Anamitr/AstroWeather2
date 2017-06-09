@@ -45,7 +45,8 @@ public class InfoFragment extends Fragment {
         btnUpdateWeather = (Button)rootView.findViewById(R.id.btnUpdateWeather);
         citiesListView = (ListView)rootView.findViewById(R.id.citiesListView);
 
-        MainActivity.city = cityTextView.getText().toString();
+        //MainActivity.city = cityTextView.getText().toString();
+        cityTextView.setText(MainActivity.city);
 
         longitudeTextView.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {

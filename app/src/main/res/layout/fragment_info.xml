@@ -131,7 +131,6 @@
                     android:textColor="@android:color/white"/>
 
                 <EditText
-                    android:text="Murmansk"
                     android:id="@+id/cityTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

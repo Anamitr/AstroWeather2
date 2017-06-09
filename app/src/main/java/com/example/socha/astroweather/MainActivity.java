@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class MainActivity extends FragmentActivity {
     private static final int NUM_PAGES = 4;
 
     public static Double longitude = 0.0, latitude = 0.0, refreshRate = 1.0;
-    public static String city, locLongitude = "0", locLatitude = "0";
+    public static String city = "Pabianice";
 
 
     public boolean isTablet;
@@ -66,6 +67,14 @@ public class MainActivity extends FragmentActivity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOffscreenPageLimit(10);
+        mPager.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mPager.getParent().getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         mPagerAdapter.notifyDataSetChanged();
 
         cities = getCitiesFromFile();

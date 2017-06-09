@@ -9,12 +9,8 @@ import com.example.socha.astroweather.adapter.DailyForecastPageAdapter;
 import com.example.socha.astroweather.model.Weather;
 import com.example.socha.astroweather.model.WeatherForecast;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,10 +21,6 @@ import android.widget.TextView;
 import android.support.v4.app.Fragment;
 
 import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ForecastFragment extends Fragment {
 
@@ -51,7 +43,7 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.activity_forecast, container, false);
+                R.layout.fragment_forecast, container, false);
 //        String city = "Warszawa";
 //        String lang = "pl";
 
