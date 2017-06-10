@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="G:\Workspaces\Android\AstroWeather2\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_f14068f50ac077db5b3ee18e3a64578e60b04bda\classes.dex" />
     </item>
     <item
@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="f5135bfb0bf3d9fbee521a80052db16f1814a232">
+        sha1="294fef8467286f966faaad9d4db0a0676949f523">
         <dex dex="G:\Workspaces\Android\AstroWeather2\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_4d6d069e30f31c9a289ce46cd12337a365306390\classes.dex" />
     </item>
     <item

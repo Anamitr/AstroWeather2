@@ -110,5 +110,21 @@ public class FileSquire {
         return null;
     }
 
+    public void saveBitmap(Bitmap bitmap, String fileName) {
+        try {
+            FileOutputStream fos = new FileOutputStream(context.getFilesDir() + fileName);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("IOException loading", fileName);
+        }
+    }
+
+    public Bitmap loadBitmap(String fileName) {
+        Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir() + fileName);
+        return bitmap;
+    }
+
 
 }

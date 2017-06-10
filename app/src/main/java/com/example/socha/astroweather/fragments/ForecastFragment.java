@@ -74,7 +74,7 @@ public class ForecastFragment extends Fragment {
 		windSpeed = (TextView) rootView.findViewById(R.id.windSpeed);
 		windDeg = (TextView) rootView.findViewById(R.id.windDeg);
 
-        updateWeatherForecast();
+        //updateWeatherForecast();
 
         return rootView;
     }
@@ -150,10 +150,10 @@ public class ForecastFragment extends Fragment {
         @Override
         protected WeatherForecast doInBackground(String... params) {
             Log.d("JSONForecastWeatherTask","");
-            String data = ( (new WeatherHttpClient()).getForecastWeatherData(params[0], params[1], params[2]));
             WeatherForecast weatherForecast = new WeatherForecast();
             if(((MainActivity) getActivity()).isOnline()) {
                 try {
+                    String data = ( (new WeatherHttpClient()).getForecastWeatherData(params[0], params[1], params[2]));
                     weatherForecast = JSONWeatherParser.getForecastWeather(data);
                     new FileSquire(getContext()).saveWeatherForecastToFile(weatherForecast,params[0]);
 //                    weatherForecast = null;

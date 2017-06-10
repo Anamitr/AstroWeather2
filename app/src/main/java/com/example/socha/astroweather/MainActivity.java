@@ -56,28 +56,13 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null){
-            city =  savedInstanceState.getString("city");
-            readFavCities();
-        }
+        readFavCities();
 
         isTablet = isTablet();
         setContentView(R.layout.activity_main_slim);
 
         // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setOffscreenPageLimit(10);
-        mPager.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mPager.getParent().getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-        mPagerAdapter.notifyDataSetChanged();
+        initializePager();
 
         cities = getCitiesFromFile();
         Log.d("cities length:", new Integer(cities.size()).toString());
@@ -148,10 +133,8 @@ public class MainActivity extends FragmentActivity {
         return cities;
     }
 
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        savedInstanceState.putString("city", city);
+    public void onStop() {
+        super.onStop();
         try {
             FileOutputStream fOut = openFileOutput("favouriteCities.txt", MODE_WORLD_READABLE);
             OutputStreamWriter osw = new OutputStreamWriter(fOut);
@@ -219,6 +202,11 @@ public class MainActivity extends FragmentActivity {
     public void onConfigurationChanged(Configuration config) {
         super.onConfigurationChanged(config);
         Toast.makeText(this, "Orientation changed!", Toast.LENGTH_LONG).show();
+        initializePager();
+        forecastFragment.updateWeatherForecast();
+    }
+
+    public void initializePager() {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);

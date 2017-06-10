@@ -24,7 +24,7 @@ import com.example.socha.astroweather.model.DayForecast;
 import com.example.socha.astroweather.model.ForecastTemp;
 import com.example.socha.astroweather.model.Weather;
 import com.example.socha.astroweather.model.WeatherForecast;
-
+import com.example.socha.astroweather.tools.FileSquire;
 
 
 import android.graphics.Bitmap;
@@ -75,6 +75,7 @@ public class DayForecastFragment extends Fragment {
 		descView.setText(dayForecast.weather.currentCondition.getDescr());
 		iconWeather = (ImageView) v.findViewById(R.id.forCondIcon);
 		// Now we retrieve the weather icon
+		Log.d("weatherIcon",dayForecast.weather.currentCondition.getIcon());
 		JSONIconWeatherTask task = new JSONIconWeatherTask();
 		task.execute(new String[]{dayForecast.weather.currentCondition.getIcon()});
 		
@@ -103,9 +104,15 @@ public class DayForecastFragment extends Fragment {
 					bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
 					data = stream.toByteArray();
 
+					new FileSquire(getContext()).saveBitmap(bmp,params[0]);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			} else {
+				Bitmap bmp = new FileSquire(getContext()).loadBitmap(params[0]);
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+				data = stream.toByteArray();
 			}
 
 
