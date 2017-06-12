@@ -159,6 +159,23 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="0dp"
+                android:gravity="center">
+
+                <ToggleButton
+                    android:id="@+id/toggleButton"
+                    android:textOff="Celsjusz"
+                    android:textOn="Fahrenheit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/listViewLinearLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"

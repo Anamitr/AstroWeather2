@@ -52,6 +52,8 @@ public class ForecastFragment extends Fragment {
     private MainActivity mainActivity;
     private Context context;
 
+    private boolean fahrenheit = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
-    public void updateWeatherForecast() {
+    public void updateWeatherForecast(boolean fahrenheit) {
         String city = MainActivity.city;
         String lang = "pl";
 
@@ -93,6 +95,8 @@ public class ForecastFragment extends Fragment {
         if(!mainActivity.isOnline()) {
             Toast.makeText(context, "Disconnected, info may be outdated!", Toast.LENGTH_SHORT).show();
         }
+
+        this.fahrenheit = fahrenheit;
 
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city,lang});
@@ -145,8 +149,8 @@ public class ForecastFragment extends Fragment {
             if(weather.location != null && weather.location.getCity() != null && weather.location.getCountry() != null) cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
             temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)));
             condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
-
-			temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)) + " C");
+            if(fahrenheit) temp.setText("" + Math.round((weather.temperature.getTemp())) + " F");
+            else temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)) + " C");
 			hum.setText("" + weather.currentCondition.getHumidity() + "%");
 			press.setText("" + weather.currentCondition.getPressure() + " hPa");
 			windSpeed.setText("" + weather.wind.getSpeed() + " mps");

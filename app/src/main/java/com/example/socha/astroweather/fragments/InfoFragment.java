@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.socha.astroweather.MainActivity;
 import com.example.socha.astroweather.R;
@@ -30,6 +31,7 @@ public class InfoFragment extends Fragment {
     public Button btnUpdateWeather;
     public ListView citiesListView;
     public LinearLayout listViewLinearLayout;
+    public ToggleButton toggleButton;
 
     private static Pattern pattern = Pattern.compile("\\s");
     private float scale;
@@ -49,6 +51,7 @@ public class InfoFragment extends Fragment {
         btnUpdateWeather = (Button)rootView.findViewById(R.id.btnUpdateWeather);
         citiesListView = (ListView)rootView.findViewById(R.id.citiesListView);
         listViewLinearLayout = (LinearLayout) rootView.findViewById(R.id.listViewLinearLayout);
+        toggleButton = (ToggleButton) rootView.findViewById(R.id.toggleButton);
 
         //MainActivity.city = cityTextView.getText().toString();
         cityTextView.setText(MainActivity.city);
@@ -118,6 +121,8 @@ public class InfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String newCity = cityTextView.getText().toString();
+                newCity = newCity.substring(0, 1).toUpperCase() + newCity.substring(1);
+                boolean fahrenheit = toggleButton.isChecked();
 
                 if(MainActivity.cities.contains(newCity)) {
                     if(((MainActivity) getActivity()).isOnline()) {
@@ -126,11 +131,11 @@ public class InfoFragment extends Fragment {
                             updateListView();
                         }
                         MainActivity.city = newCity;
-                        MainActivity.forecastFragment.updateWeatherForecast();
+                        MainActivity.forecastFragment.updateWeatherForecast(fahrenheit);
                     } else {
                         if( MainActivity.favouriteCities.contains(newCity)) {
                             MainActivity.city = newCity;
-                            MainActivity.forecastFragment.updateWeatherForecast();
+                            MainActivity.forecastFragment.updateWeatherForecast(fahrenheit);
                         } else {
                             Toast.makeText(getContext(), "Disconnected, can't download new city!", Toast.LENGTH_LONG).show();
                         }
@@ -149,7 +154,7 @@ public class InfoFragment extends Fragment {
                                     int position, long id) {
                 String selectedFromList = (String) (citiesListView.getItemAtPosition(position));
                 MainActivity.city = selectedFromList;
-                MainActivity.forecastFragment.updateWeatherForecast();
+                MainActivity.forecastFragment.updateWeatherForecast(toggleButton.isChecked());
             }});
 
         return rootView;

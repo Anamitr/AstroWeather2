@@ -70,9 +70,7 @@ public class MainActivity extends FragmentActivity {
         if(isOnline()) {
             Toast.makeText(this, "is online!", Toast.LENGTH_LONG).show();
         } else Toast.makeText(this, "is not online!", Toast.LENGTH_LONG).show();
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -198,7 +196,7 @@ public class MainActivity extends FragmentActivity {
         super.onConfigurationChanged(config);
         Toast.makeText(this, "Orientation changed!", Toast.LENGTH_LONG).show();
         initializePager();
-        forecastFragment.updateWeatherForecast();
+        forecastFragment.updateWeatherForecast(infoFragment.toggleButton.isChecked());
     }
 
     public void initializePager() {
