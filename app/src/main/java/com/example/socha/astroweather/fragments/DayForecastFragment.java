@@ -72,7 +72,8 @@ public class DayForecastFragment extends Fragment {
 		TextView descView = (TextView) v.findViewById(R.id.skydescForecast);
 		//dayForecast.forecastTemp = new ForecastTemp();
 		Log.d("min temp:", new Float(dayForecast.forecastTemp.min).toString());
-		tempView.setText( (int) (dayForecast.forecastTemp.min) + "-" + (int) (dayForecast.forecastTemp.max) + " C" );
+        if(((MainActivity) getActivity()).infoFragment.toggleButton.isChecked())  tempView.setText( (int) ((dayForecast.forecastTemp.min + 273.15) * 9/5 - 459.67) + "-" + (int) ((dayForecast.forecastTemp.max + 273.15) * 9/5 - 459.67) + " F" );
+        else tempView.setText( (int) (dayForecast.forecastTemp.min) + "-" + (int) (dayForecast.forecastTemp.max) + " C" );
 		descView.setText(dayForecast.weather.currentCondition.getDescr());
 		iconWeather = (ImageView) v.findViewById(R.id.forCondIcon);
 		// Now we retrieve the weather icon

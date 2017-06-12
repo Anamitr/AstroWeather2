@@ -154,10 +154,10 @@ public class ForecastFragment extends Fragment {
             }
 
             if(weather.location != null && weather.location.getCity() != null && weather.location.getCountry() != null) cityText.setText(weather.location.getCity() + "," + weather.location.getCountry());
-            temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)));
+            //temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)));
             condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
-            if(fahrenheit) temp.setText("" + Math.round((weather.temperature.getTemp())) + " F");
-            else temp.setText("" + Math.round((weather.temperature.getTemp() - 275.15)) + " C");
+            if(fahrenheit) temp.setText("" + Math.round((weather.temperature.getTemp() * 9/5 - 459.67)) + " F");
+            else temp.setText("" + Math.round((weather.temperature.getTemp() - 273.15)) + " C");
 			hum.setText("" + weather.currentCondition.getHumidity() + "%");
 			press.setText("" + weather.currentCondition.getPressure() + " hPa");
 			windSpeed.setText("" + weather.wind.getSpeed() + " mps");
