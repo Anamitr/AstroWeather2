@@ -154,9 +154,9 @@ public class InfoFragment extends Fragment {
                                     int position, long id) {
                 String selectedFromList = (String) (citiesListView.getItemAtPosition(position));
                 MainActivity.city = selectedFromList;
+                cityTextView.setText(selectedFromList);
                 MainActivity.forecastFragment.updateWeatherForecast(toggleButton.isChecked());
             }});
-
         return rootView;
     }
 

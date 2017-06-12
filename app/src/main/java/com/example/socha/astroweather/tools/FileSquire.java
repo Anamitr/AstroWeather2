@@ -17,6 +17,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -124,6 +125,13 @@ public class FileSquire {
     public Bitmap loadBitmap(String fileName) {
         Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir() + fileName);
         return bitmap;
+    }
+
+    public long checkFileDate(String fileName) {
+        File filesDir = context.getFilesDir();
+        File file = new File(filesDir, fileName);
+        if(!file.exists()) return -999;
+        return file.lastModified();
     }
 
 

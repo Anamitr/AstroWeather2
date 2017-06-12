@@ -13,9 +13,11 @@ import com.example.socha.astroweather.tools.FileSquire;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.util.Calendar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 
 public class ForecastFragment extends Fragment {
 
@@ -53,6 +56,8 @@ public class ForecastFragment extends Fragment {
     private Context context;
 
     private boolean fahrenheit = false;
+
+    Date currentDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +87,7 @@ public class ForecastFragment extends Fragment {
         //updateWeatherForecast();
         mainActivity = (MainActivity) getActivity();
         context = getContext();
+        currentDate = new Date();
 
         return rootView;
     }
@@ -117,7 +123,12 @@ public class ForecastFragment extends Fragment {
 
             Weather weather = new Weather();
 
-            if(mainActivity.isOnline()) {
+            if(DateUtils.isToday(new FileSquire(context).checkFileDate("weather" + params[0])) || !mainActivity.isOnline()) {
+                Log.d("Disconn or uptodate","Reading from file");
+                Log.d("Time", new Float(new FileSquire(context).checkFileDate("weather" + params[0])).toString() + ", " + new Date());
+                weather = new FileSquire(context).loadWeatherFromFile(params[0]);
+            }
+            else {
                 try {
                     String data = ( (new WeatherHttpClient()).getWeatherData(params[0],params[1]));//, params[1]));
                     weather = JSONWeatherParser.getWeather(data);
@@ -129,10 +140,6 @@ public class ForecastFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            } else {
-                Log.d("Disconnected","Reading from file");
-
-                weather = new FileSquire(context).loadWeatherFromFile(params[0]);
             }
             return weather;
         }
@@ -155,7 +162,6 @@ public class ForecastFragment extends Fragment {
 			press.setText("" + weather.currentCondition.getPressure() + " hPa");
 			windSpeed.setText("" + weather.wind.getSpeed() + " mps");
 			windDeg.setText("" + weather.wind.getDeg() + " stopni");
-
         }
     }
 
@@ -165,7 +171,9 @@ public class ForecastFragment extends Fragment {
         protected WeatherForecast doInBackground(String... params) {
             Log.d("JSONForecastWeatherTask","");
             WeatherForecast weatherForecast = new WeatherForecast();
-            if(mainActivity.isOnline()) {
+            if(DateUtils.isToday(new FileSquire(context).checkFileDate("weatherForecast" + params[0])) || !mainActivity.isOnline()) {
+                weatherForecast = new FileSquire(context).loadWeatherForecastFromFile(params[0]);
+            } else {
                 try {
                     String data = ( (new WeatherHttpClient()).getForecastWeatherData(params[0], params[1], params[2]));
                     weatherForecast = JSONWeatherParser.getForecastWeather(data);
@@ -179,10 +187,7 @@ public class ForecastFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            } else {
-                weatherForecast = new FileSquire(context).loadWeatherForecastFromFile(params[0]);
             }
-
             //Log.d("jsontask", new Float(weatherForecast.getForecast(0).forecastTemp.min).toString());
             return weatherForecast;
         }
