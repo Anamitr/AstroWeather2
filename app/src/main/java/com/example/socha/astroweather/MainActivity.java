@@ -69,7 +69,7 @@ public class MainActivity extends FragmentActivity {
 
         if(isOnline()) {
             Toast.makeText(this, "is online!", Toast.LENGTH_LONG).show();
-        } else Toast.makeText(this, "is not omline!", Toast.LENGTH_LONG).show();
+        } else Toast.makeText(this, "is not online!", Toast.LENGTH_LONG).show();
 
     }
 
@@ -175,14 +175,9 @@ public class MainActivity extends FragmentActivity {
             String readString = new String(inputBuffer);
             readString = readString.substring(0,readString.indexOf("\n"));
             favouriteCities = new ArrayList<String>(Arrays.asList(readString.split(" ")));
-            Log.d("readString", readString);
-            Log.d("favouriteCities", favouriteCities.toString());
+//            Log.d("readString", readString);
+//            Log.d("favouriteCities", favouriteCities.toString());
 
-
-            // Check if we read back the same chars that we had written out
-            boolean isTheSame = "hello merlin".equals(readString);
-
-            Log.i("Merlin Reading stuff", "success = " + isTheSame);
         } catch (FileNotFoundException e) {
             Log.d("FileNotFoundException","!!!");
         }

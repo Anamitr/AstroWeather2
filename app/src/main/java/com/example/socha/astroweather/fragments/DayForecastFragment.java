@@ -49,6 +49,7 @@ public class DayForecastFragment extends Fragment {
 	
 	public DayForecast dayForecast;
 	private ImageView iconWeather;
+	private MainActivity mainActivity;
 	
 	public DayForecastFragment() {}
 	
@@ -78,6 +79,8 @@ public class DayForecastFragment extends Fragment {
 		Log.d("weatherIcon",dayForecast.weather.currentCondition.getIcon());
 		JSONIconWeatherTask task = new JSONIconWeatherTask();
 		task.execute(new String[]{dayForecast.weather.currentCondition.getIcon()});
+
+		mainActivity = (MainActivity) getActivity();
 		
 		return v;
 	}
@@ -95,7 +98,7 @@ public class DayForecastFragment extends Fragment {
 
 			byte[] data = null;
 
-			if(((MainActivity) getActivity()).isOnline()) {
+			if(mainActivity.isOnline()) {
 				try {
 
 					// Let's retrieve the icon

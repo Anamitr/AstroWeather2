@@ -49,6 +49,9 @@ public class ForecastFragment extends Fragment {
     public static final String forecastDaysNum = "5";
     private ViewPager pager;
 
+    private MainActivity mainActivity;
+    private Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +78,8 @@ public class ForecastFragment extends Fragment {
 		windDeg = (TextView) rootView.findViewById(R.id.windDeg);
 
         //updateWeatherForecast();
+        mainActivity = (MainActivity) getActivity();
+        context = getContext();
 
         return rootView;
     }
@@ -84,6 +89,10 @@ public class ForecastFragment extends Fragment {
         String lang = "pl";
 
         cityText.setText(city);
+
+        if(!mainActivity.isOnline()) {
+            Toast.makeText(context, "Disconnected, info may be outdated!", Toast.LENGTH_SHORT).show();
+        }
 
         JSONWeatherTask task = new JSONWeatherTask();
         task.execute(new String[]{city,lang});
@@ -104,7 +113,7 @@ public class ForecastFragment extends Fragment {
 
             Weather weather = new Weather();
 
-            if(((MainActivity) getActivity()).isOnline()) {
+            if(mainActivity.isOnline()) {
                 try {
                     String data = ( (new WeatherHttpClient()).getWeatherData(params[0],params[1]));//, params[1]));
                     weather = JSONWeatherParser.getWeather(data);
@@ -112,13 +121,14 @@ public class ForecastFragment extends Fragment {
                     System.out.println("Weather ["+weather+"]");
                     // Let's retrieve the icon
                     weather.iconBitmap = ( (new WeatherHttpClient()).getBitmapFromURL(weather.currentCondition.getIcon()));
-                    new FileSquire(getContext()).saveWeatherToFile(weather);
+                    new FileSquire(context).saveWeatherToFile(weather);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             } else {
                 Log.d("Disconnected","Reading from file");
-                weather = new FileSquire(getContext()).loadWeatherFromFile(params[0]);
+
+                weather = new FileSquire(context).loadWeatherFromFile(params[0]);
             }
             return weather;
         }
@@ -151,11 +161,11 @@ public class ForecastFragment extends Fragment {
         protected WeatherForecast doInBackground(String... params) {
             Log.d("JSONForecastWeatherTask","");
             WeatherForecast weatherForecast = new WeatherForecast();
-            if(((MainActivity) getActivity()).isOnline()) {
+            if(mainActivity.isOnline()) {
                 try {
                     String data = ( (new WeatherHttpClient()).getForecastWeatherData(params[0], params[1], params[2]));
                     weatherForecast = JSONWeatherParser.getForecastWeather(data);
-                    new FileSquire(getContext()).saveWeatherForecastToFile(weatherForecast,params[0]);
+                    new FileSquire(context).saveWeatherForecastToFile(weatherForecast,params[0]);
 //                    weatherForecast = null;
 //                    weatherForecast = loadWeatherForecastFromFile(params[0]);
                     System.out.println("Weather ["+weatherForecast+"]");
@@ -166,7 +176,7 @@ public class ForecastFragment extends Fragment {
                     e.printStackTrace();
                 }
             } else {
-                weatherForecast = new FileSquire(getContext()).loadWeatherForecastFromFile(params[0]);
+                weatherForecast = new FileSquire(context).loadWeatherForecastFromFile(params[0]);
             }
 
             //Log.d("jsontask", new Float(weatherForecast.getForecast(0).forecastTemp.min).toString());

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,10 @@ public class InfoFragment extends Fragment {
     public TextView timeTextView, longitudeTextView, latitudeTextView, refreshRateTextView, cityTextView;
     public Button btnUpdateWeather;
     public ListView citiesListView;
+    public LinearLayout listViewLinearLayout;
+
     private static Pattern pattern = Pattern.compile("\\s");
+    private float scale;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,9 +48,13 @@ public class InfoFragment extends Fragment {
         cityTextView = (TextView)rootView.findViewById(R.id.cityTextView);
         btnUpdateWeather = (Button)rootView.findViewById(R.id.btnUpdateWeather);
         citiesListView = (ListView)rootView.findViewById(R.id.citiesListView);
+        listViewLinearLayout = (LinearLayout) rootView.findViewById(R.id.listViewLinearLayout);
 
         //MainActivity.city = cityTextView.getText().toString();
         cityTextView.setText(MainActivity.city);
+
+        scale = getContext().getResources().getDisplayMetrics().density;
+        listViewLinearLayout.getLayoutParams().height = (int) (50 * scale + 0.5f)*MainActivity.favouriteCities.size();
 
         longitudeTextView.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -110,18 +118,25 @@ public class InfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String newCity = cityTextView.getText().toString();
+
                 if(MainActivity.cities.contains(newCity)) {
-                    MainActivity.city = newCity;
-
-
-                    MainActivity.forecastFragment.updateWeatherForecast();
-
-                    if( !MainActivity.favouriteCities.contains(newCity)) {
-                        MainActivity.favouriteCities.add(newCity);
-                        updateListView();
+                    if(((MainActivity) getActivity()).isOnline()) {
+                        if( !MainActivity.favouriteCities.contains(newCity)) {
+                            MainActivity.favouriteCities.add(newCity);
+                            updateListView();
+                        }
+                        MainActivity.city = newCity;
+                        MainActivity.forecastFragment.updateWeatherForecast();
+                    } else {
+                        if( MainActivity.favouriteCities.contains(newCity)) {
+                            MainActivity.city = newCity;
+                            MainActivity.forecastFragment.updateWeatherForecast();
+                        } else {
+                            Toast.makeText(getContext(), "Disconnected, can't download new city!", Toast.LENGTH_LONG).show();
+                        }
                     }
-                }
-                else {
+
+                } else {
                     Toast.makeText(getActivity(), "Nie ma takiego miasta!",
                             Toast.LENGTH_LONG).show();
                 }
@@ -146,6 +161,7 @@ public class InfoFragment extends Fragment {
                 android.R.layout.simple_list_item_1,
                 MainActivity.favouriteCities);
         citiesListView.setAdapter(arrayAdapter);
+        listViewLinearLayout.getLayoutParams().height += (int) (50 * scale + 0.5f);
     }
 
     @Override
