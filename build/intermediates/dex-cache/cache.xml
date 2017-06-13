@@ -2,6 +2,15 @@
 <items version="2" >
 
     <item
+        is-multidex="false"
+        jar="G:\Workspaces\Android\AstroWeather2\app\libs\astrocalculator.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="72ab0f44b65a7732286d24fd30e9392db95cc171">
+        <dex dex="G:\Workspaces\Android\AstroWeather2\app\build\intermediates\pre-dexed\debug\astrocalculator_ab64d536068ef5f446124b5d50f8d007ec4dafcd.jar" />
+    </item>
+    <item
         is-multidex="true"
         jar="G:\Workspaces\Android\AstroWeather2\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
